@@ -217,7 +217,7 @@ function Speakers() {
         image={heroImage}
       />
 
-      {/* Top Speakers Section - with expand effect */}
+{/* Top Speakers Section - with expand effect */}
       <section className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
         {/* Background decoration */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -231,7 +231,8 @@ function Speakers() {
           subtitle="These extraordinary leaders are reshaping industries and inspiring the next generation."
         />
 
-        <div className="mt-16 flex items-stretch justify-center gap-8 lg:flex-nowrap">
+        {/* FIX: Changed layout to flex-col (vertical stack) for mobile, and flex-row (horizontal) for large screens */}
+        <div className="mt-16 flex flex-col gap-6 items-center lg:flex-row lg:items-stretch lg:justify-center lg:gap-8">
           {topSpeakers.map((speaker) => (
             <TopSpeakerCard key={speaker.id} speaker={speaker} />
           ))}

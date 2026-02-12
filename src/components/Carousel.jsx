@@ -12,23 +12,31 @@ function Carousel({ items, renderItem, ariaLabel = 'carousel' }) {
   }
 
   return (
-    <div className="relative">
+    <div className="relative group">
       <div
         ref={containerRef}
-        className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+        className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         role="region"
         aria-label={ariaLabel}
       >
         {items.map((item) => (
-          <div key={item.id || item.title} className="w-[260px] shrink-0 snap-start sm:w-[300px]">
+          // FIX: Changed w-[260px] to w-[75vw]. 
+          // This makes the card responsive relative to the screen size (viewport),
+          // preventing horizontal overflow on small phones.
+          <div 
+            key={item.id || item.title} 
+            className="w-[75vw] shrink-0 snap-center sm:w-[300px] sm:snap-start"
+          >
             {renderItem(item)}
           </div>
         ))}
       </div>
+      
+      {/* Navigation Buttons (Desktop only) */}
       <button
         type="button"
         onClick={() => scrollByAmount(-1)}
-        className="absolute -left-4 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-stone/50 bg-white text-ink shadow-soft transition hover:border-copper hover:text-copper md:flex"
+        className="absolute -left-4 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-stone/50 bg-white text-ink shadow-soft transition hover:border-copper hover:text-copper md:flex md:opacity-0 md:group-hover:opacity-100"
         aria-label="Scroll left"
       >
         <ChevronLeft size={18} />
@@ -36,7 +44,7 @@ function Carousel({ items, renderItem, ariaLabel = 'carousel' }) {
       <button
         type="button"
         onClick={() => scrollByAmount(1)}
-        className="absolute -right-4 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-stone/50 bg-white text-ink shadow-soft transition hover:border-copper hover:text-copper md:flex"
+        className="absolute -right-4 top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-stone/50 bg-white text-ink shadow-soft transition hover:border-copper hover:text-copper md:flex md:opacity-0 md:group-hover:opacity-100"
         aria-label="Scroll right"
       >
         <ChevronRight size={18} />

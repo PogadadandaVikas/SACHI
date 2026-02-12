@@ -8,7 +8,7 @@ import speakers from "../data/speakers";
 import eventsByYear from "../data/events";
 
 const heroImage =
-  "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1600&q=80";
+  "https://plus.unsplash.com/premium_photo-1722859243012-a3cbd543a365?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 const trophyImage =
   "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80";
 
