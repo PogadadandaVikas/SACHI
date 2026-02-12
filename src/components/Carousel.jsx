@@ -15,7 +15,7 @@ function Carousel({ items, renderItem, ariaLabel = 'carousel' }) {
     <div className="relative">
       <div
         ref={containerRef}
-        className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 pr-4 scroll-smooth"
+        className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         role="region"
         aria-label={ariaLabel}
       >
