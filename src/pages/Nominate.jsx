@@ -28,7 +28,7 @@ import {
 } from "../components/FormInput";
 
 const heroImage =
-  "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1600&q=80";
+  "https://images.unsplash.com/photo-1764176269321-6d14f4af09c7?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 const fieldOptions = [
   "Technology",
@@ -166,8 +166,8 @@ function Nominate() {
   };
 
   return (
-    <div className="bg-mist">
-      {/* Hero Section - Matching Home page style */}
+    <div className="bg-mist overflow-x-hidden">
+      {/* Hero Section */}
       <section className="relative isolate overflow-hidden bg-ink text-white">
         <img
           src={heroImage}
@@ -175,13 +175,16 @@ function Nominate() {
           className="absolute inset-0 h-full w-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/70 to-ink/30" />
-        <div className="relative mx-auto flex max-w-6xl flex-col gap-8 px-6 py-24 md:flex-row md:items-center md:py-28">
+        {/* FIX: Reduced vertical padding on mobile (py-16) */}
+        <div className="relative mx-auto flex max-w-6xl flex-col gap-8 px-6 py-16 md:flex-row md:items-center md:py-28">
           <div className="max-w-2xl animate-fade-up">
             <p className="text-xs uppercase tracking-[0.4em] text-copper/80">
               SACHI Awards 2026
             </p>
-            <h1 className="mt-4 text-4xl font-semibold text-white md:text-5xl">
-              Nominate an Inspiring <br />Woman Leader
+            {/* FIX: Smaller heading on mobile (text-3xl) to prevent wrapping overflow */}
+            <h1 className="mt-4 text-3xl font-semibold text-white md:text-5xl">
+              Nominate an Inspiring <br />
+              Woman Leader
             </h1>
             <p className="mt-4 text-base text-mist/90 md:text-lg">
               Do you know a woman who's making a difference? Recognize her
@@ -207,17 +210,23 @@ function Nominate() {
         </div>
       </section>
 
-      {/* Stats Bar - Matching Home page style */}
-      <div className="mx-auto max-w-6xl px-6 -mt-12 mb-12">
-        <div className="grid grid-cols-3 gap-4 rounded-2xl bg-white/90 p-6 shadow-soft backdrop-blur-sm md:flex md:justify-start md:gap-12 md:p-8">
+      {/* Stats Bar */}
+      {/* FIX: Reduced margin/padding on mobile (px-4) */}
+      <div className="mx-auto max-w-6xl px-4 md:px-6 -mt-12 mb-12 relative z-10">
+        {/* FIX: Changed grid-cols-3 to grid-cols-1 sm:grid-cols-3 to stack on mobile */}
+        <div className="grid grid-cols-1 gap-6 rounded-2xl bg-white/90 p-6 shadow-soft backdrop-blur-sm sm:grid-cols-3 md:gap-12 md:p-8">
           <div className="text-center md:text-left">
-            <p className="text-2xl font-semibold text-copper md:text-3xl">200+</p>
+            <p className="text-2xl font-semibold text-copper md:text-3xl">
+              200+
+            </p>
             <p className="mt-1 text-xs uppercase tracking-[0.2em] text-ink/60">
               Leaders Honored
             </p>
           </div>
           <div className="text-center md:text-left">
-            <p className="text-2xl font-semibold text-copper md:text-3xl">50K+</p>
+            <p className="text-2xl font-semibold text-copper md:text-3xl">
+              50K+
+            </p>
             <p className="mt-1 text-xs uppercase tracking-[0.2em] text-ink/60">
               Women Impacted
             </p>
@@ -232,10 +241,17 @@ function Nominate() {
       </div>
 
       {/* Main Nomination Section */}
-      <section id="nomination-form" className="mx-auto max-w-6xl px-6 pb-16">
-        <div className="grid gap-8 lg:grid-cols-3">
+      {/* FIX: Reduced padding (px-4) on mobile to give more width to content */}
+      {/* Main Nomination Section */}
+      <section
+        id="nomination-form"
+        className="mx-auto max-w-6xl px-4 pb-12 md:px-6 md:pb-16"
+      >
+        {/* FIX: Explicitly set grid-cols-1 for mobile to ensure stacking */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
           {/* Form Card - Main Column */}
-          <Card className="lg:col-span-2 overflow-hidden border-none bg-white p-0 shadow-xl">
+          {/* FIX: Added w-full to ensure it takes full width of the grid cell */}
+          <Card className="w-full lg:col-span-2 overflow-hidden border-none bg-white p-0 shadow-xl">
             {/* Form Header */}
             <div className="border-b border-stone/20 bg-gradient-to-r from-copper/5 to-transparent p-6 md:p-8">
               <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -244,7 +260,8 @@ function Nominate() {
                     Nomination Form
                   </h2>
                   <p className="mt-1 text-sm text-ink/60">
-                    Fill in the details below to submit your nomination for the SACHI Awards
+                    Fill in the details below to submit your nomination for the
+                    SACHI Awards
                   </p>
                 </div>
                 <span className="self-start rounded-full bg-copper/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-copper md:self-center">
@@ -254,7 +271,7 @@ function Nominate() {
             </div>
 
             {/* Form Body */}
-            <form className="p-6 md:p-8" onSubmit={handleSubmit} noValidate>
+            <form className="p-4 md:p-8" onSubmit={handleSubmit} noValidate>
               <div className="space-y-8">
                 {/* Nominator Information */}
                 <div>
@@ -264,7 +281,8 @@ function Nominate() {
                     </span>
                     Your Information
                   </h3>
-                  <div className="mt-4 grid gap-6 md:grid-cols-2">
+                  {/* FIX: grid-cols-1 on mobile, grid-cols-2 on md+ */}
+                  <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2">
                     <FormInput
                       label="Your Full Name"
                       name="name"
@@ -295,7 +313,8 @@ function Nominate() {
                     </span>
                     Nominee Information
                   </h3>
-                  <div className="mt-4 grid gap-6 md:grid-cols-2">
+                  {/* FIX: grid-cols-1 on mobile, grid-cols-2 on md+ */}
+                  <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2">
                     <FormInput
                       label="Nominee Full Name"
                       name="nominee"
@@ -347,22 +366,38 @@ function Nominate() {
                       rows={4}
                     />
 
-                    <div className="rounded-xl bg-mist/60 p-5">
+                    <div className="rounded-xl bg-mist/60 p-4 md:p-5">
                       <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink/60">
                         Tips for a strong nomination
                       </p>
                       <ul className="mt-3 space-y-2">
                         <li className="flex items-start gap-2 text-sm text-ink/70">
-                          <CheckCircle size={14} className="mt-0.5 flex-shrink-0 text-copper" />
-                          <span>Highlight measurable outcomes and communities served</span>
+                          <CheckCircle
+                            size={14}
+                            className="mt-0.5 flex-shrink-0 text-copper"
+                          />
+                          <span>
+                            Highlight measurable outcomes and communities served
+                          </span>
                         </li>
                         <li className="flex items-start gap-2 text-sm text-ink/70">
-                          <CheckCircle size={14} className="mt-0.5 flex-shrink-0 text-copper" />
-                          <span>Describe her leadership style and how she inspires others</span>
+                          <CheckCircle
+                            size={14}
+                            className="mt-0.5 flex-shrink-0 text-copper"
+                          />
+                          <span>
+                            Describe her leadership style and how she inspires
+                            others
+                          </span>
                         </li>
                         <li className="flex items-start gap-2 text-sm text-ink/70">
-                          <CheckCircle size={14} className="mt-0.5 flex-shrink-0 text-copper" />
-                          <span>Include her vision for future impact and growth</span>
+                          <CheckCircle
+                            size={14}
+                            className="mt-0.5 flex-shrink-0 text-copper"
+                          />
+                          <span>
+                            Include her vision for future impact and growth
+                          </span>
                         </li>
                       </ul>
                     </div>
@@ -383,10 +418,15 @@ function Nominate() {
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                   <div>
                     <p className="text-xs text-ink/50">
-                      <span className="font-semibold text-copper">*</span> Required fields
+                      <span className="font-semibold text-copper">*</span>{" "}
+                      Required fields
                     </p>
                   </div>
-                  <Button type="submit" size="lg" className="w-full md:w-auto min-w-[200px]">
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full md:w-auto min-w-[200px]"
+                  >
                     Submit Nomination
                     <ChevronRight size={16} className="ml-2" />
                   </Button>
@@ -401,10 +441,12 @@ function Nominate() {
                       <CheckCircle className="h-5 w-5 text-copper" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-ink">Nomination Submitted Successfully!</h4>
+                      <h4 className="font-semibold text-ink">
+                        Nomination Submitted Successfully!
+                      </h4>
                       <p className="mt-1 text-sm text-ink/70">
-                        Thank you for your nomination. Our team will review the submission and
-                        get back to you within 5-7 business days.
+                        Thank you for your nomination. Our team will review the
+                        submission and get back to you within 5-7 business days.
                       </p>
                     </div>
                   </div>
@@ -414,7 +456,8 @@ function Nominate() {
           </Card>
 
           {/* Sidebar - Right Column */}
-          <div className="space-y-6">
+          {/* FIX: Added w-full to ensure sidebar takes full width on mobile */}
+          <div className="w-full space-y-6">
             {/* Awards Gallery Card */}
             <Card className="overflow-hidden border-none bg-gradient-to-br from-ink to-ink/95 p-0 shadow-xl">
               <div className="p-6">
@@ -431,12 +474,12 @@ function Nominate() {
                 </p>
               </div>
 
-              <div className="px-6 pb-6">
+              <div className="px-4 pb-6 md:px-6">
                 <Carousel
                   items={awardGallery}
                   ariaLabel="Awards gallery"
                   renderItem={(item) => (
-                    <div className="group overflow-hidden rounded-xl bg-white/5 backdrop-blur-sm transition-all hover:bg-white/10">
+                    <div className="group overflow-hidden rounded-xl bg-white/5 backdrop-blur-sm transition-all hover:bg-white/10 h-full">
                       <div className="flex h-36 items-center justify-center p-5">
                         <div
                           className={`flex h-24 w-24 items-center justify-center rounded-2xl ${item.bg} bg-opacity-20`}
@@ -462,7 +505,9 @@ function Nominate() {
             <Card className="border-none bg-white p-6 shadow-xl">
               <div className="flex items-center gap-2">
                 <Sparkles size={18} className="text-copper" />
-                <h3 className="text-lg font-semibold text-ink">Nomination Tips</h3>
+                <h3 className="text-lg font-semibold text-ink">
+                  Nomination Tips
+                </h3>
               </div>
               <p className="mt-2 text-sm text-ink/60">
                 What makes a powerful nomination
@@ -475,7 +520,9 @@ function Nominate() {
                       <tip.icon size={16} className="text-copper" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-ink">{tip.title}</p>
+                      <p className="text-sm font-medium text-ink">
+                        {tip.title}
+                      </p>
                       <p className="text-xs text-ink/60">{tip.description}</p>
                     </div>
                   </div>
@@ -484,7 +531,8 @@ function Nominate() {
 
               <div className="mt-6 rounded-xl bg-mist/60 p-4">
                 <p className="text-xs text-ink/70">
-                  <span className="font-semibold text-copper">Deadline:</span> March 30, 2026
+                  <span className="font-semibold text-copper">Deadline:</span>{" "}
+                  March 30, 2026
                 </p>
                 <p className="mt-1 text-xs text-ink/50">
                   Late submissions will be considered for the next award cycle.
@@ -513,7 +561,7 @@ function Nominate() {
         </div>
       </section>
 
-      {/* Process Section - Matching Home page style */}
+      {/* Process Section */}
       <section className="bg-white/80">
         <div className="mx-auto max-w-6xl px-6 py-16">
           <SectionHeader
@@ -533,7 +581,9 @@ function Nominate() {
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-copper/10 transition-colors group-hover:bg-copper/20">
                   <step.icon className="h-6 w-6 text-copper" />
                 </div>
-                <h3 className="mt-4 text-lg font-semibold text-ink">{step.title}</h3>
+                <h3 className="mt-4 text-lg font-semibold text-ink">
+                  {step.title}
+                </h3>
                 <p className="mt-2 text-sm text-ink/60 leading-relaxed">
                   {step.description}
                 </p>
@@ -550,14 +600,17 @@ function Nominate() {
             <div className="inline-flex items-center gap-3 rounded-full bg-mist/80 px-6 py-3">
               <Calendar size={16} className="flex-shrink-0 text-copper" />
               <span className="text-sm text-ink/70">
-                Next Award Ceremony: <span className="font-semibold text-ink">November 15, 2026</span>
+                Next Award Ceremony:{" "}
+                <span className="font-semibold text-ink">
+                  November 15, 2026
+                </span>
               </span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section - Matching Home page style */}
+      {/* CTA Section */}
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="grid items-center gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
@@ -568,7 +621,8 @@ function Nominate() {
               Ready to recognize a trailblazer?
             </h2>
             <p className="mt-4 text-sm text-ink/70">
-              Every nomination helps us discover and celebrate women who are shaping a better future.
+              Every nomination helps us discover and celebrate women who are
+              shaping a better future.
             </p>
             <div className="mt-6 flex flex-wrap gap-4">
               <Button href="#nomination-form">Nominate Now</Button>
@@ -580,8 +634,12 @@ function Nominate() {
           <Card className="overflow-hidden bg-gradient-to-br from-copper/20 to-copper/5 p-8">
             <div className="text-center">
               <Trophy size={48} className="mx-auto text-copper" />
-              <p className="mt-4 text-lg font-semibold text-ink">SACHI Awards 2026</p>
-              <p className="mt-2 text-sm text-ink/60">Celebrating women who lead</p>
+              <p className="mt-4 text-lg font-semibold text-ink">
+                SACHI Awards 2026
+              </p>
+              <p className="mt-2 text-sm text-ink/60">
+                Celebrating women who lead
+              </p>
             </div>
           </Card>
         </div>
