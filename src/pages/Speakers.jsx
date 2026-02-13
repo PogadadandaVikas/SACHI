@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { Linkedin, Award, Briefcase, MapPin } from 'lucide-react'
 import PageHeader from '../components/PageHeader'
 import speakers from '../data/speakers'
@@ -27,105 +28,210 @@ function SectionDivider({ title, subtitle, accent }) {
 }
 
 function TopSpeakerCard({ speaker }) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
   return (
-    <article className="group relative h-[500px] w-full overflow-hidden rounded-3xl bg-white shadow-xl transition-all duration-500 hover:w-[220%] hover:shadow-2xl lg:w-full lg:hover:w-[200%] z-10 hover:z-20">
-      <div className="relative flex h-full w-full">
-        {/* Image section - always visible, shrinks on hover */}
-        <div className="relative h-full w-full transition-all duration-500 group-hover:w-2/5">
-          <img
-            src={speaker.image}
-            alt={speaker.name}
-            className="h-full w-full object-cover"
-            loading="lazy"
-          />
+    <>
+      {/* =========================================
+          MOBILE VIEW (Flip Card) - Visible < lg
+         ========================================= */}
+      <div 
+        className="group relative h-[500px] w-full lg:hidden perspective-[1000px]"
+        onClick={() => setIsFlipped(!isFlipped)}
+      >
+        <div className={`relative h-full w-full transition-all duration-700 [transform-style:preserve-3d] rounded-3xl shadow-xl ${isFlipped ? '[transform:rotateY(180deg)]' : ''}`}>
           
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent" />
-          
-          {/* LinkedIn button */}
-          {speaker.linkedin && (
-            <a
-              href={speaker.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="absolute right-4 top-4 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-copper shadow-lg backdrop-blur-sm transition-all hover:bg-copper hover:text-white hover:scale-110"
-              aria-label={`${speaker.name}'s LinkedIn profile`}
-            >
-              <Linkedin size={18} />
-            </a>
-          )}
-          
-          {/* Basic info overlay on image */}
-          <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-            <span className="inline-block rounded-full bg-copper/90 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] backdrop-blur-sm">
-              Featured Speaker
-            </span>
-            <h3 className="mt-3 text-2xl font-bold">{speaker.name}</h3>
-            <p className="mt-1 text-sm text-white/90">{speaker.role}</p>
-            {speaker.org && (
-              <p className="flex items-center gap-1.5 text-xs text-white/80 mt-1.5">
-                <Briefcase size={12} />
-                {speaker.org}
-              </p>
-            )}
-          </div>
-        </div>
-
-        {/* Details section - slides in on hover */}
-        <div className="absolute right-0 h-full w-0 bg-gradient-to-br from-white to-mist/50 p-0 opacity-0 transition-all duration-500 group-hover:relative group-hover:w-3/5 group-hover:p-8 group-hover:opacity-100">
-          <div className="flex h-full flex-col justify-between">
-            {/* Top section - Name and title */}
-            <div>
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold text-ink">{speaker.name}</h3>
-                <p className="text-copper font-semibold mt-1">{speaker.role}</p>
-                {speaker.org && (
-                  <p className="text-sm text-ink/60 mt-0.5">{speaker.org}</p>
-                )}
-              </div>
-              
-              {/* Signature focus - compact */}
-              <div className="mb-6">
-                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-copper/80">
-                  Signature Focus
-                </span>
-                <p className="mt-2 text-sm italic text-ink/80 leading-relaxed bg-copper/5 p-4 rounded-2xl line-clamp-3">
-                  "{speaker.message}"
-                </p>
-              </div>
-
-              {/* Bio - condensed */}
-              <div className="mb-6">
-                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-copper/80">
-                  About
-                </span>
-                <p className="mt-2 text-sm text-ink/70 leading-relaxed line-clamp-3">
-                  {speaker.bio}
-                </p>
-              </div>
+          {/* --- FRONT FACE (Image) --- */}
+          <div className="absolute inset-0 h-full w-full rounded-3xl overflow-hidden [backface-visibility:hidden]">
+            <img
+              src={speaker.image}
+              alt={speaker.name}
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent" />
+            
+            {/* Tap hint */}
+            <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md rounded-full px-3 py-1 text-xs text-white border border-white/30">
+               {isFlipped ? 'Tap to close' : 'Tap for details'}
             </div>
 
-            {/* Bottom section - Achievements */}
-            {speaker.achievements?.length > 0 && (
-              <div className="mt-auto">
-                <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-copper/80 mb-3">
-                  <Award size={14} />
-                  Key Achievements
-                </span>
-                <ul className="space-y-2">
-                  {speaker.achievements.slice(0, 2).map((achievement, index) => (
-                    <li key={index} className="flex items-start gap-3 text-sm text-ink/70">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-copper flex-shrink-0" />
-                      <span className="line-clamp-2">{achievement}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            {/* Basic info overlay */}
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+              <span className="inline-block rounded-full bg-copper/90 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] backdrop-blur-sm">
+                Featured Speaker
+              </span>
+              <h3 className="mt-3 text-2xl font-bold">{speaker.name}</h3>
+              <p className="mt-1 text-sm text-white/90">{speaker.role}</p>
+              {speaker.org && (
+                <p className="flex items-center gap-1.5 text-xs text-white/80 mt-1.5">
+                  <Briefcase size={12} />
+                  {speaker.org}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* --- BACK FACE (Details) --- */}
+          {/* FIXES APPLIED:
+              1. Added [&::-webkit-scrollbar]:hidden, [scrollbar-width:none], [-ms-overflow-style:none] to hide visual scrollbar.
+              2. Removed LinkedIn Button.
+              3. Changed inner layout to use 'gap-6' and 'justify-center' for better vertical alignment.
+          */}
+          <div className="absolute inset-0 h-full w-full rounded-3xl bg-white p-8 [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-y-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]">
+             <div className="flex flex-col h-full justify-center gap-6">
+                
+                {/* Header */}
+                <div>
+                  <h3 className="text-2xl font-bold text-ink">{speaker.name}</h3>
+                  <p className="text-copper font-semibold mt-1">{speaker.role}</p>
+                </div>
+
+                {/* Signature Focus */}
+                <div>
+                  <span className="text-xs font-semibold uppercase tracking-[0.2em] text-copper/80">
+                    Signature Focus
+                  </span>
+                  <p className="mt-3 text-sm italic text-ink/80 leading-relaxed bg-copper/5 p-4 rounded-2xl">
+                    "{speaker.message}"
+                  </p>
+                </div>
+
+                {/* Bio */}
+                <div>
+                  <span className="text-xs font-semibold uppercase tracking-[0.2em] text-copper/80">
+                    About
+                  </span>
+                  <p className="mt-2 text-sm text-ink/70 leading-relaxed">
+                    {speaker.bio}
+                  </p>
+                </div>
+
+                {/* Achievements */}
+                {speaker.achievements?.length > 0 && (
+                  <div>
+                    <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-copper/80 mb-3">
+                      <Award size={14} />
+                      Key Achievements
+                    </span>
+                    <ul className="space-y-2">
+                      {speaker.achievements.slice(0, 3).map((achievement, index) => (
+                        <li key={index} className="flex items-start gap-3 text-sm text-ink/70">
+                          <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-copper flex-shrink-0" />
+                          <span>{achievement}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+             </div>
           </div>
         </div>
       </div>
-    </article>
+
+      {/* =========================================
+          DESKTOP VIEW (Hover Slide) - Visible >= lg
+         ========================================= */}
+      <article className="hidden lg:block group relative h-[500px] w-full overflow-hidden rounded-3xl bg-white shadow-xl transition-all duration-500 hover:w-[220%] hover:shadow-2xl lg:w-full lg:hover:w-[200%] z-10 hover:z-20">
+        <div className="relative flex h-full w-full">
+          {/* Image section - always visible, shrinks on hover */}
+          <div className="relative h-full w-full transition-all duration-500 group-hover:w-2/5">
+            <img
+              src={speaker.image}
+              alt={speaker.name}
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
+            
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent" />
+            
+            {/* LinkedIn button */}
+            {speaker.linkedin && (
+              <a
+                href={speaker.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute right-4 top-4 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-copper shadow-lg backdrop-blur-sm transition-all hover:bg-copper hover:text-white hover:scale-110"
+                aria-label={`${speaker.name}'s LinkedIn profile`}
+              >
+                <Linkedin size={18} />
+              </a>
+            )}
+            
+            {/* Basic info overlay on image */}
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+              <span className="inline-block rounded-full bg-copper/90 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] backdrop-blur-sm">
+                Featured Speaker
+              </span>
+              <h3 className="mt-3 text-2xl font-bold">{speaker.name}</h3>
+              <p className="mt-1 text-sm text-white/90">{speaker.role}</p>
+              {speaker.org && (
+                <p className="flex items-center gap-1.5 text-xs text-white/80 mt-1.5">
+                  <Briefcase size={12} />
+                  {speaker.org}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Details section - slides in on hover */}
+          <div className="absolute right-0 h-full w-0 bg-gradient-to-br from-white to-mist/50 p-0 opacity-0 transition-all duration-500 group-hover:relative group-hover:w-3/5 group-hover:p-8 group-hover:opacity-100">
+            <div className="flex h-full flex-col justify-between">
+              {/* Top section - Name and title */}
+              <div>
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold text-ink">{speaker.name}</h3>
+                  <p className="text-copper font-semibold mt-1">{speaker.role}</p>
+                  {speaker.org && (
+                    <p className="text-sm text-ink/60 mt-0.5">{speaker.org}</p>
+                  )}
+                </div>
+                
+                {/* Signature focus - compact */}
+                <div className="mb-6">
+                  <span className="text-xs font-semibold uppercase tracking-[0.2em] text-copper/80">
+                    Signature Focus
+                  </span>
+                  <p className="mt-2 text-sm italic text-ink/80 leading-relaxed bg-copper/5 p-4 rounded-2xl line-clamp-3">
+                    "{speaker.message}"
+                  </p>
+                </div>
+
+                {/* Bio - condensed */}
+                <div className="mb-6">
+                  <span className="text-xs font-semibold uppercase tracking-[0.2em] text-copper/80">
+                    About
+                  </span>
+                  <p className="mt-2 text-sm text-ink/70 leading-relaxed line-clamp-3">
+                    {speaker.bio}
+                  </p>
+                </div>
+              </div>
+
+              {/* Bottom section - Achievements */}
+              {speaker.achievements?.length > 0 && (
+                <div className="mt-auto">
+                  <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-copper/80 mb-3">
+                    <Award size={14} />
+                    Key Achievements
+                  </span>
+                  <ul className="space-y-2">
+                    {speaker.achievements.slice(0, 2).map((achievement, index) => (
+                      <li key={index} className="flex items-start gap-3 text-sm text-ink/70">
+                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-copper flex-shrink-0" />
+                        <span className="line-clamp-2">{achievement}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </article>
+    </>
   )
 }
 
@@ -231,8 +337,11 @@ function Speakers() {
           subtitle="These extraordinary leaders are reshaping industries and inspiring the next generation."
         />
 
-        {/* FIX: Changed layout to flex-col (vertical stack) for mobile, and flex-row (horizontal) for large screens */}
-        <div className="mt-16 flex flex-col gap-6 items-center lg:flex-row lg:items-stretch lg:justify-center lg:gap-8">
+        {/* Container Layout:
+            - Mobile: flex-col (Stack)
+            - Desktop: flex-row (Horizontal) 
+        */}
+        <div className="mt-16 flex flex-col gap-8 items-center lg:flex-row lg:items-stretch lg:justify-center">
           {topSpeakers.map((speaker) => (
             <TopSpeakerCard key={speaker.id} speaker={speaker} />
           ))}
